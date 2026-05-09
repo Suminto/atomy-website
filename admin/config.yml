@@ -1,0 +1,66 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+site_url: "/"
+display_url: "/"
+logo_url: "/assets/images/atomy-logo.png"
+
+collections:
+  - name: "posts"
+    label: "📝 Artikel / Blog"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Judul", name: "title", widget: "string" }
+      - { label: "Tanggal", name: "date", widget: "datetime" }
+      - { label: "Kategori", name: "category", widget: "select", options: ["Info Atomy", "Produk", "Promo", "Tips & Trik", "Berita"] }
+      - { label: "Gambar Cover", name: "thumbnail", widget: "image", required: false }
+      - { label: "Ringkasan", name: "summary", widget: "text" }
+      - { label: "Isi Artikel", name: "body", widget: "markdown" }
+      - { label: "Tampilkan di Beranda?", name: "featured", widget: "boolean", default: false }
+
+  - name: "testimonials"
+    label: "⭐ Testimoni"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nama", name: "name", widget: "string" }
+      - { label: "Kota", name: "city", widget: "string" }
+      - { label: "Produk yang Digunakan", name: "product", widget: "string" }
+      - { label: "Rating (1-5)", name: "rating", widget: "number", min: 1, max: 5, default: 5 }
+      - { label: "Foto (opsional)", name: "photo", widget: "image", required: false }
+      - { label: "Cerita Testimoni", name: "body", widget: "markdown" }
+
+  - name: "products"
+    label: "🛍️ Produk Unggulan"
+    folder: "content/products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nama Produk", name: "title", widget: "string" }
+      - { label: "Kategori", name: "category", widget: "select", options: ["Skincare", "Health", "Hair Care", "Body Care", "Oral Care", "Household"] }
+      - { label: "Foto Produk", name: "image", widget: "image" }
+      - { label: "Deskripsi Singkat", name: "summary", widget: "text" }
+      - { label: "Detail Produk", name: "body", widget: "markdown" }
+      - { label: "Tampilkan di Beranda?", name: "featured", widget: "boolean", default: true }
+
+  - name: "settings"
+    label: "⚙️ Pengaturan Website"
+    files:
+      - label: "Info Umum"
+        name: "general"
+        file: "content/settings/general.json"
+        fields:
+          - { label: "Nama Admin/Sponsor", name: "adminName", widget: "string" }
+          - { label: "No WhatsApp (format: 628xxx)", name: "whatsapp", widget: "string" }
+          - { label: "Link Pendaftaran Atomy", name: "registerLink", widget: "string", default: "https://www.atomy.com" }
+          - { label: "Teks Hero (Judul Besar)", name: "heroTitle", widget: "string", default: "Bergabunglah dengan Atomy" }
+          - { label: "Teks Hero (Subjudul)", name: "heroSubtitle", widget: "text" }
+          - { label: "Email Kontak", name: "email", widget: "string", required: false }
+          - { label: "Instagram", name: "instagram", widget: "string", required: false }

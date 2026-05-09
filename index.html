@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AtomyID-47801115 – Produk Premium untuk Semua</title>
+  <meta name="description" content="Temukan informasi terbaru produk Atomy, testimoni member, dan cara bergabung menjadi member Atomy Indonesia." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <style>
+    :root {
+      --gold: #C9A84C; --gold-light: #E8C97A; --gold-pale: #FDF6E3;
+      --dark: #0D0D0D; --dark-2: #1A1A2E; --gray: #6B7280;
+      --gray-light: #F8F8F6; --white: #FFFFFF;
+      --radius: 12px; --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-gold: 0 8px 32px rgba(201,168,76,0.25);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Plus Jakarta Sans',sans-serif; color:var(--dark); background:var(--white); overflow-x:hidden; }
+
+    .navbar {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      background:rgba(255,255,255,0.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(201,168,76,0.15);
+      padding:0 5%; height:70px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-qr {
+      width:40px; height:40px; border-radius:8px;
+      overflow:hidden; border:2px solid var(--gold); flex-shrink:0;
+    }
+    .logo-qr img { width:100%; height:100%; object-fit:cover; display:block; }
+    .logo-text { font-size:1rem; font-weight:700; color:var(--dark); }
+    .logo-text span { color:var(--gold); }
+    .nav-links { display:flex; gap:2rem; list-style:none; align-items:center; }
+    .nav-links a { text-decoration:none; color:var(--gray); font-size:0.9rem; font-weight:500; transition:color 0.2s; }
+    .nav-links a:hover { color:var(--gold); }
+    .nav-cta {
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:white !important; padding:8px 20px; border-radius:50px;
+      font-weight:600 !important; transition:opacity 0.2s,transform 0.2s !important;
+    }
+    .nav-cta:hover { opacity:0.9; transform:translateY(-1px); }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--dark); border-radius:2px; }
+
+    .hero {
+      min-height:100vh;
+      background:linear-gradient(135deg,#0D0D0D 0%,#1A1A2E 50%,#0D0D0D 100%);
+      display:flex; align-items:center;
+      position:relative; overflow:hidden; padding-top:70px;
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 80% 60% at 70% 50%,rgba(201,168,76,0.12) 0%,transparent 70%);
+    }
+    .hero-grid {
+      position:absolute; inset:0;
+      background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+    .hero-content {
+      position:relative; z-index:2;
+      max-width:1200px; margin:0 auto; padding:0 5%;
+      display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(201,168,76,0.15); border:1px solid rgba(201,168,76,0.3);
+      color:var(--gold-light); font-size:0.8rem; font-weight:600;
+      padding:6px 16px; border-radius:50px; margin-bottom:1.5rem;
+      letter-spacing:0.05em; text-transform:uppercase;
+    }
+    .hero-title { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,4vw,3.5rem); color:white; line-height:1.2; margin-bottom:1.5rem; }
+    .hero-title em { color:var(--gold-light); font-style:italic; }
+    .hero-subtitle { color:rgba(255,255,255,0.65); font-size:1rem; line-height:1.8; margin-bottom:2.5rem; }
+    .hero-buttons { display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:8px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:var(--dark); font-weight:700; font-size:0.95rem;
+      padding:14px 28px; border-radius:50px; text-decoration:none;
+      box-shadow:var(--shadow-gold); transition:transform 0.2s,box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(201,168,76,0.4); }
+    .btn-secondary {
+      display:inline-flex; align-items:center; gap:8px;
+      background:transparent; border:1px solid rgba(255,255,255,0.25);
+      color:white; font-weight:600; font-size:0.95rem;
+      padding:14px 28px; border-radius:50px; text-decoration:none; transition:all 0.2s;
+    }
+    .btn-secondary:hover { border-color:var(--gold); color:var(--gold); }
+    .hero-stats { display:flex; gap:2rem; margin-top:3rem; }
+    .stat-num { font-size:1.8rem; font-weight:800; color:var(--gold-light); }
+    .stat-label { font-size:0.75rem; color:rgba(255,255,255,0.5); font-weight:500; }
+    .hero-visual { display:flex; align-items:center; justify-content:center; }
+    .hero-card {
+      background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.2);
+      border-radius:20px; padding:2rem; backdrop-filter:blur(20px);
+      width:100%; max-width:380px;
+    }
+    .hero-card-title { color:var(--gold-light); font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; }
+    .feature-list { list-style:none; }
+    .feature-list li { display:flex; align-items:flex-start; gap:12px; color:rgba(255,255,255,0.8); font-size:0.9rem; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .feature-list li:last-child { border-bottom:none; }
+    .feature-icon { font-size:1.1rem; flex-shrink:0; margin-top:1px; }
+
+    section { padding:5rem 5%; }
+    .section-container { max-width:1200px; margin:0 auto; }
+    .section-label { display:inline-block; color:var(--gold); font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.75rem; }
+    .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.5rem); color:var(--dark); line-height:1.3; margin-bottom:1rem; }
+    .section-subtitle { color:var(--gray); font-size:1rem; line-height:1.7; max-width:600px; }
+    .section-header { margin-bottom:3rem; }
+
+    .posts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5rem; }
+    .post-card { background:white; border-radius:var(--radius); border:1px solid rgba(0,0,0,0.07); overflow:hidden; transition:transform 0.2s,box-shadow 0.2s; cursor:pointer; }
+    .post-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+    .post-thumbnail { width:100%; height:200px; background:linear-gradient(135deg,var(--dark-2),var(--dark)); display:flex; align-items:center; justify-content:center; font-size:3rem; overflow:hidden; }
+    .post-thumbnail img { width:100%; height:100%; object-fit:cover; }
+    .post-body { padding:1.5rem; }
+    .post-cat { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); margin-bottom:0.5rem; }
+    .post-title { font-size:1rem; font-weight:700; color:var(--dark); line-height:1.4; margin-bottom:0.5rem; }
+    .post-summary { font-size:0.85rem; color:var(--gray); line-height:1.6; margin-bottom:1rem; }
+    .post-date { font-size:0.75rem; color:#9CA3AF; }
+    .loading-placeholder { text-align:center; padding:3rem; color:var(--gray); font-size:0.9rem; }
+
+    .products { background:var(--gray-light); }
+    .products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.5rem; }
+    .product-card { background:white; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(0,0,0,0.07); transition:transform 0.2s,box-shadow 0.2s; }
+    .product-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+    .product-img { width:100%; height:220px; background:linear-gradient(135deg,var(--gold-pale),#FFF); display:flex; align-items:center; justify-content:center; font-size:4rem; overflow:hidden; }
+    .product-img img { width:100%; height:100%; object-fit:cover; }
+    .product-body { padding:1.25rem; }
+    .product-cat { font-size:0.7rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem; }
+    .product-name { font-size:0.95rem; font-weight:700; color:var(--dark); line-height:1.4; }
+    .product-desc { font-size:0.82rem; color:var(--gray); line-height:1.6; margin-top:0.5rem; }
+
+    .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; }
+    .testi-card { background:white; border-radius:var(--radius); padding:1.5rem; border:1px solid rgba(0,0,0,0.07); position:relative; }
+    .testi-card::before { content:'"'; font-family:'Playfair Display',serif; font-size:5rem; color:var(--gold-pale); position:absolute; top:0.5rem; left:1rem; line-height:1; }
+    .testi-rating { color:#F59E0B; font-size:0.9rem; margin-bottom:0.75rem; position:relative; z-index:1; }
+    .testi-text { font-size:0.88rem; color:var(--gray); line-height:1.7; margin-bottom:1rem; position:relative; z-index:1; }
+    .testi-author { display:flex; align-items:center; gap:12px; }
+    .testi-avatar { width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--gold),var(--gold-light)); display:flex; align-items:center; justify-content:center; font-weight:700; color:white; font-size:1rem; overflow:hidden; flex-shrink:0; }
+    .testi-avatar img { width:100%; height:100%; object-fit:cover; }
+    .testi-name { font-size:0.9rem; font-weight:700; color:var(--dark); }
+    .testi-meta { font-size:0.75rem; color:var(--gray); }
+
+    .join-cta { background:linear-gradient(135deg,var(--dark-2) 0%,var(--dark) 100%); text-align:center; position:relative; overflow:hidden; }
+    .join-cta::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(201,168,76,0.15) 0%,transparent 70%); }
+    .join-buttons { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+    .btn-wa { display:inline-flex; align-items:center; gap:8px; background:#25D366; color:white; font-weight:700; padding:14px 28px; border-radius:50px; text-decoration:none; transition:transform 0.2s,opacity 0.2s; }
+    .btn-wa:hover { transform:translateY(-2px); opacity:0.9; }
+
+    footer { background:var(--dark); color:rgba(255,255,255,0.6); padding:3rem 5%; text-align:center; }
+    .footer-inner { max-width:1200px; margin:0 auto; }
+    .footer-logo { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--gold-light); margin-bottom:0.5rem; }
+    .footer-disclaimer { font-size:0.8rem; line-height:1.7; max-width:600px; margin:1rem auto 0; }
+    .footer-disclaimer a { color:var(--gold-light); }
+    .footer-bottom { margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.08); font-size:0.78rem; }
+
+    .modal-overlay { position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:2rem; }
+    .modal-overlay.open { display:flex; }
+    .modal-box { background:white; border-radius:16px; max-width:680px; width:100%; max-height:80vh; overflow-y:auto; padding:2.5rem; position:relative; }
+    .modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; cursor:pointer; font-size:1.5rem; color:var(--gray); width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:background 0.2s; }
+    .modal-close:hover { background:var(--gray-light); }
+    .modal-cat { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); margin-bottom:0.5rem; }
+    .modal-title { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--dark); margin-bottom:0.75rem; }
+    .modal-date { font-size:0.8rem; color:var(--gray); margin-bottom:1.5rem; }
+    .modal-img { width:100%; border-radius:10px; margin-bottom:1.5rem; }
+    .modal-content { font-size:0.92rem; line-height:1.8; color:#374151; }
+    .modal-content h1,.modal-content h2,.modal-content h3 { font-family:'Playfair Display',serif; color:var(--dark); margin:1.5rem 0 0.5rem; }
+    .modal-content p { margin-bottom:1rem; }
+    .modal-content blockquote { border-left:3px solid var(--gold); padding-left:1rem; color:var(--gray); margin:1rem 0; font-style:italic; }
+    .modal-content ul,.modal-content ol { padding-left:1.5rem; margin-bottom:1rem; }
+    .modal-content li { margin-bottom:0.4rem; }
+
+    .mobile-menu { display:none; position:fixed; top:70px; left:0; right:0; background:white; z-index:99; padding:1rem 5%; border-bottom:1px solid rgba(0,0,0,0.08); flex-direction:column; gap:0.5rem; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { text-decoration:none; color:var(--gray); font-weight:500; padding:0.6rem 0; border-bottom:1px solid rgba(0,0,0,0.05); }
+    .mobile-menu a:last-child { border-bottom:none; }
+
+    @media (max-width:768px) {
+      .nav-links { display:none; } .hamburger { display:flex; }
+      .hero-content { grid-template-columns:1fr; gap:2rem; }
+      .hero-visual { display:none; } .hero-stats { gap:1.2rem; }
+      section { padding:3.5rem 5%; }
+    }
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .fade-up.visible { opacity:1; transform:none; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="#" class="logo">
+    <div class="logo-qr">
+      <img src="/assets/images/qr-logo.jpg" alt="QR AtomyID-47801115">
+    </div>
+    <span class="logo-text">AtomyID-<span>47801115</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://global.atomy.com/menu.es?mid=b10101000000" target="_blank" rel="noopener">Tentang Atomy</a></li>
+    <li><a href="#artikel">Artikel</a></li>
+    <li><a href="#produk">Produk</a></li>
+    <li><a href="#testimoni">Testimoni</a></li>
+    <li><a href="https://id.atomy.com/gate/join/easyreg/v2/47801115" target="_blank" rel="noopener" class="nav-cta">Daftar Sekarang</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://global.atomy.com/menu.es?mid=b10101000000" target="_blank" rel="noopener" onclick="toggleMenu()">Tentang Atomy</a>
+  <a href="#artikel" onclick="toggleMenu()">Artikel</a>
+  <a href="#produk" onclick="toggleMenu()">Produk</a>
+  <a href="#testimoni" onclick="toggleMenu()">Testimoni</a>
+  <a href="https://id.atomy.com/gate/join/easyreg/v2/47801115" target="_blank" rel="noopener" onclick="toggleMenu()">Daftar Sekarang</a>
+</div>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge">🌏 Member Atomy Indonesia · ID 47801115</div>
+      <h1 class="hero-title">Temukan Produk Berkualitas <em>Dunia</em></h1>
+      <p class="hero-subtitle">Atomy menghadirkan produk premium berbasis ilmu pengetahuan dengan harga terjangkau. Bergabunglah dengan jutaan member di seluruh dunia.</p>
+      <div class="hero-buttons">
+        <a href="https://id.atomy.com/gate/join/easyreg/v2/47801115" target="_blank" rel="noopener" class="btn-primary">✨ Daftar Member Gratis</a>
+        <a href="https://global.atomy.com/menu.es?mid=b10101000000" target="_blank" rel="noopener" class="btn-secondary">Pelajari Lebih Lanjut →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label">Negara</div></div>
+        <div class="stat-item"><div class="stat-num">20Jt+</div><div class="stat-label">Member</div></div>
+        <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Kualitas</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-title">✦ Keunggulan Atomy</div>
+        <ul class="feature-list">
+          <li><span class="feature-icon">🏆</span> Kualitas world-class teruji ilmiah</li>
+          <li><span class="feature-icon">💰</span> Harga terjangkau, bukan murahan</li>
+          <li><span class="feature-icon">🌿</span> Bahan alami & ramah lingkungan</li>
+          <li><span class="feature-icon">📦</span> Pengiriman ke seluruh Indonesia</li>
+          <li><span class="feature-icon">🤝</span> Komunitas member yang solid</li>
+          <li><span class="feature-icon">🎯</span> Peluang bisnis tanpa modal besar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="artikel">
+  <div class="section-container">
+    <div class="section-header fade-up">
+      <span class="section-label">Informasi Terkini</span>
+      <h2 class="section-title">Artikel & Update Terbaru</h2>
+      <p class="section-subtitle">Temukan informasi terbaru seputar Atomy, tips produk, dan berita jaringan kami.</p>
+    </div>
+    <div class="posts-grid" id="postsGrid"><div class="loading-placeholder">⏳ Memuat artikel...</div></div>
+  </div>
+</section>
+
+<section id="produk" class="products">
+  <div class="section-container">
+    <div class="section-header fade-up">
+      <span class="section-label">Pilihan Terbaik</span>
+      <h2 class="section-title">Produk Unggulan Atomy</h2>
+      <p class="section-subtitle">Rangkaian produk berkualitas tinggi untuk kebutuhan sehari-hari Anda dan keluarga.</p>
+    </div>
+    <div class="products-grid" id="productsGrid"><div class="loading-placeholder">⏳ Memuat produk...</div></div>
+    <div style="text-align:center;margin-top:2rem;">
+      <p style="font-size:0.85rem;color:var(--gray);">Untuk pemesanan dan info harga lengkap, kunjungi <a href="https://id.atomy.com/main" target="_blank" style="color:var(--gold);font-weight:600;">Website Resmi Atomy Indonesia</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="testimoni">
+  <div class="section-container">
+    <div class="section-header fade-up">
+      <span class="section-label">Cerita Nyata</span>
+      <h2 class="section-title">Kata Member Kami</h2>
+      <p class="section-subtitle">Pengalaman nyata dari member yang telah merasakan manfaat produk Atomy.</p>
+    </div>
+    <div class="testimonials-grid" id="testiGrid"><div class="loading-placeholder">⏳ Memuat testimoni...</div></div>
+  </div>
+</section>
+
+<section id="gabung" class="join-cta">
+  <div class="section-container" style="position:relative;z-index:1;">
+    <div class="fade-up">
+      <span class="section-label" style="color:var(--gold-light);">Mulai Perjalanan Anda</span>
+      <h2 class="section-title" style="color:white;">Siap Bergabung dengan Atomy?</h2>
+      <p style="color:rgba(255,255,255,0.6);font-size:1rem;line-height:1.7;max-width:500px;margin:0 auto 2rem;">Daftar sebagai member Atomy sekarang dan nikmati produk premium serta peluang bisnis tanpa batas. Pendaftaran gratis!</p>
+      <div class="join-buttons">
+        <a href="https://wa.me/6281931231247?text=Halo%2C%20saya%20ingin%20tahu%20lebih%20lanjut%20tentang%20Atomy" target="_blank" rel="noopener" class="btn-wa">💬 Hubungi via WhatsApp</a>
+        <a href="https://id.atomy.com/gate/join/easyreg/v2/47801115" target="_blank" rel="noopener" class="btn-primary">✨ Daftar di Website Resmi</a>
+      </div>
+      <p style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:2rem;">Pendaftaran dilakukan melalui website resmi Atomy Indonesia. Tidak ada biaya pendaftaran.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">AtomyID-47801115</div>
+    <p style="font-size:0.85rem;margin-top:0.25rem;">Website Informasi Member</p>
+    <p class="footer-disclaimer">Website ini adalah website pribadi member Atomy Indonesia dan bukan merupakan website resmi Atomy. Untuk informasi resmi, kunjungi <a href="https://id.atomy.com/main" target="_blank">id.atomy.com</a></p>
+    <div class="footer-bottom"><p>© <span id="year"></span> AtomyID-47801115 Member Site. Dibuat dengan ❤️ untuk jaringan Atomy Indonesia.</p></div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="postModal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('postModal').classList.remove('open')">✕</button>
+    <div class="modal-cat" id="modalCat"></div>
+    <h2 class="modal-title" id="modalTitle"></h2>
+    <div class="modal-date" id="modalDate"></div>
+    <img class="modal-img" id="modalImg" src="" alt="" style="display:none">
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+function parseFrontmatter(raw) {
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) return { meta:{}, body:raw };
+  try { return { meta:jsyaml.load(match[1])||{}, body:match[2].trim() }; }
+  catch(e) { return { meta:{}, body:raw }; }
+}
+function formatDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+}
+function stars(n) { return '★'.repeat(n)+'☆'.repeat(5-n); }
+const EMOJI = {'Skincare':'✨','Health':'💊','Hair Care':'💆','Body Care':'🧴','Oral Care':'🦷','Household':'🏠','default':'📦'};
+
+async function loadPosts() {
+  const grid = document.getElementById('postsGrid');
+  try {
+    const res = await fetch('/content/posts/index.json').catch(()=>null);
+    let files = res&&res.ok ? await res.json() : ['2024-01-15-selamat-datang.md'];
+    const posts = [];
+    for (const f of files) {
+      const r = await fetch('/content/posts/'+f).catch(()=>null);
+      if (!r||!r.ok) continue;
+      const {meta,body} = parseFrontmatter(await r.text());
+      posts.push({...meta,body,filename:f});
+    }
+    posts.sort((a,b)=>new Date(b.date)-new Date(a.date));
+    if (!posts.length) { grid.innerHTML='<div class="loading-placeholder">Belum ada artikel.</div>'; return; }
+    grid.innerHTML = posts.map((p,i)=>`
+      <article class="post-card fade-up" onclick="openPost(${i})">
+        <div class="post-thumbnail">${p.thumbnail?`<img src="${p.thumbnail}" alt="${p.title}" loading="lazy">`:'📝'}</div>
+        <div class="post-body">
+          <div class="post-cat">${p.category||'Artikel'}</div>
+          <h3 class="post-title">${p.title||'Tanpa Judul'}</h3>
+          <p class="post-summary">${p.summary||''}</p>
+          <div class="post-date">${formatDate(p.date)}</div>
+        </div>
+      </article>`).join('');
+    window.__posts = posts; observeFadeUps();
+  } catch(e) { grid.innerHTML='<div class="loading-placeholder">Gagal memuat artikel.</div>'; }
+}
+
+function openPost(i) {
+  const p = window.__posts[i];
+  document.getElementById('modalCat').textContent = p.category||'Artikel';
+  document.getElementById('modalTitle').textContent = p.title||'';
+  document.getElementById('modalDate').textContent = formatDate(p.date);
+  const img = document.getElementById('modalImg');
+  if (p.thumbnail){img.src=p.thumbnail;img.style.display='block';}else{img.style.display='none';}
+  document.getElementById('modalContent').innerHTML = marked.parse(p.body||'');
+  document.getElementById('postModal').classList.add('open');
+}
+function closeModal(e) { if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); }
+
+async function loadProducts() {
+  const grid = document.getElementById('productsGrid');
+  try {
+    const res = await fetch('/content/products/index.json').catch(()=>null);
+    let files = res&&res.ok ? await res.json() : ['absolute-cellactive-skincare.md'];
+    const products = [];
+    for (const f of files) {
+      const r = await fetch('/content/products/'+f).catch(()=>null);
+      if (!r||!r.ok) continue;
+      const {meta,body} = parseFrontmatter(await r.text());
+      if (meta.featured!==false) products.push({...meta,body});
+    }
+    if (!products.length) { grid.innerHTML='<div class="loading-placeholder">Belum ada produk.</div>'; return; }
+    grid.innerHTML = products.map(p=>`
+      <div class="product-card fade-up">
+        <div class="product-img">${p.image?`<img src="${p.image}" alt="${p.title}" loading="lazy">`:(EMOJI[p.category]||EMOJI.default)}</div>
+        <div class="product-body">
+          <div class="product-cat">${p.category||'Produk'}</div>
+          <h3 class="product-name">${p.title||''}</h3>
+          <p class="product-desc">${p.summary||''}</p>
+        </div>
+      </div>`).join('');
+    observeFadeUps();
+  } catch(e) { grid.innerHTML='<div class="loading-placeholder">Gagal memuat produk.</div>'; }
+}
+
+async function loadTestimonials() {
+  const grid = document.getElementById('testiGrid');
+  try {
+    const res = await fetch('/content/testimonials/index.json').catch(()=>null);
+    let files = res&&res.ok ? await res.json() : ['siti-rahayu.md'];
+    const list = [];
+    for (const f of files) {
+      const r = await fetch('/content/testimonials/'+f).catch(()=>null);
+      if (!r||!r.ok) continue;
+      const {meta,body} = parseFrontmatter(await r.text());
+      list.push({...meta,body});
+    }
+    if (!list.length) { grid.innerHTML='<div class="loading-placeholder">Belum ada testimoni.</div>'; return; }
+    grid.innerHTML = list.map(t=>`
+      <div class="testi-card fade-up">
+        <div class="testi-rating">${stars(t.rating||5)}</div>
+        <p class="testi-text">${(t.body||'').replace(/\n/g,' ').slice(0,200)}${(t.body||'').length>200?'...':''}</p>
+        <div class="testi-author">
+          <div class="testi-avatar">${t.photo?`<img src="${t.photo}" alt="${t.name}">`:(t.name||'M').charAt(0)}</div>
+          <div><div class="testi-name">${t.name||'Anonymous'}</div><div class="testi-meta">${t.city||''}${t.product?' • '+t.product:''}</div></div>
+        </div>
+      </div>`).join('');
+    observeFadeUps();
+  } catch(e) { grid.innerHTML='<div class="loading-placeholder">Gagal memuat testimoni.</div>'; }
+}
+
+function observeFadeUps() {
+  const els = document.querySelectorAll('.fade-up:not(.observed)');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:0.1});
+  els.forEach(el=>{el.classList.add('observed');io.observe(el);});
+}
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+document.getElementById('year').textContent = new Date().getFullYear();
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init',user=>{if(!user)window.netlifyIdentity.on('login',()=>document.location.href='/admin/');});
+}
+loadPosts(); loadProducts(); loadTestimonials(); observeFadeUps();
+</script>
+</body>
+</html>

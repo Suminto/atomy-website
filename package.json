@@ -1,0 +1,12 @@
+{
+  "name": "atomy-website",
+  "version": "1.0.0",
+  "description": "Website informasi member Atomy Indonesia",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js && npx serve ."
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
