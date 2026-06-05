@@ -208,11 +208,11 @@
     </div>
     <span class="logo-text">AtomyID-<span>47801115</span></span>
   </a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="https://global.atomy.com/menu.es?mid=b10101000000" target="_blank" rel="noopener">Tentang Atomy</a></li>
     <li><a href="#artikel">Artikel</a></li>
     <li><a href="#produk">Produk</a></li>
-    <li><a href="#testimoni">Testimoni</a></li>
+    <li><a href="#pakai-atomy" onclick="filterKategori('Pakai Atomy Yuk')">Pakai Atomy Yuk</a></li>
     <li><a href="https://id.atomy.com/gate/join/easyreg/v2/47801115" target="_blank" rel="noopener" class="nav-cta">Daftar Sekarang</a></li>
   </ul>
   <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
@@ -220,9 +220,9 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="https://global.atomy.com/menu.es?mid=b10101000000" target="_blank" rel="noopener" onclick="toggleMenu()">Tentang Atomy</a>
+  <a href="#artikel" onclick="toggleMenu(); filterKategori('Pakai Atomy Yuk')">Pakai Atomy Yuk</a>
   <a href="#artikel" onclick="toggleMenu()">Artikel</a>
   <a href="#produk" onclick="toggleMenu()">Produk</a>
-  <a href="#testimoni" onclick="toggleMenu()">Testimoni</a>
   <a href="https://id.atomy.com/gate/join/easyreg/v2/47801115" target="_blank" rel="noopener" onclick="toggleMenu()">Daftar Sekarang</a>
 </div>
 
@@ -281,17 +281,6 @@
     <div style="text-align:center;margin-top:2rem;">
       <p style="font-size:0.85rem;color:var(--gray);">Untuk pemesanan dan info harga lengkap, kunjungi <a href="https://id.atomy.com/main" target="_blank" style="color:var(--gold);font-weight:600;">Website Resmi Atomy Indonesia</a></p>
     </div>
-  </div>
-</section>
-
-<section id="testimoni">
-  <div class="section-container">
-    <div class="section-header fade-up">
-      <span class="section-label">Cerita Nyata</span>
-      <h2 class="section-title">Kata Member Kami</h2>
-      <p class="section-subtitle">Pengalaman nyata dari member yang telah merasakan manfaat produk Atomy.</p>
-    </div>
-    <div class="testimonials-grid" id="testiGrid"><div class="loading-placeholder">⏳ Memuat testimoni...</div></div>
   </div>
 </section>
 
@@ -444,6 +433,44 @@ function observeFadeUps() {
   els.forEach(el=>{el.classList.add('observed');io.observe(el);});
 }
 function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+// Filter artikel berdasarkan kategori
+let activeFilter = null;
+function filterKategori(kategori) {
+  activeFilter = kategori;
+  const cards = document.querySelectorAll('.post-card');
+  const grid = document.getElementById('postsGrid');
+  if (!cards.length) return;
+  let ada = false;
+  cards.forEach(card => {
+    const cat = card.querySelector('.post-cat');
+    if (cat && cat.textContent.trim() === kategori) {
+      card.style.display = 'block'; ada = true;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  // Tampilkan pesan jika tidak ada artikel di kategori ini
+  let info = document.getElementById('filterInfo');
+  if (!info) {
+    info = document.createElement('p');
+    info.id = 'filterInfo';
+    info.style.cssText = 'text-align:center;color:var(--gray);font-size:0.85rem;margin-bottom:1rem;';
+    grid.parentNode.insertBefore(info, grid);
+  }
+  if (!ada) {
+    info.textContent = 'Belum ada artikel dalam kategori "' + kategori + '". Segera hadir!';
+  } else {
+    info.innerHTML = 'Menampilkan kategori: <strong>' + kategori + '</strong> — <a href="#" onclick="resetFilter();return false;" style="color:var(--gold)">Lihat semua</a>';
+  }
+}
+
+function resetFilter() {
+  activeFilter = null;
+  document.querySelectorAll('.post-card').forEach(c => c.style.display = 'block');
+  const info = document.getElementById('filterInfo');
+  if (info) info.remove();
+}
 
 document.getElementById('year').textContent = new Date().getFullYear();
 if (window.netlifyIdentity) {
