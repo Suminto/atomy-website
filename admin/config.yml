@@ -18,7 +18,7 @@ collections:
     fields:
       - { label: "Judul", name: "title", widget: "string" }
       - { label: "Tanggal", name: "date", widget: "datetime" }
-      - { label: "Kategori", name: "category", widget: "select", options: ["Info Atomy", "Produk", "Promo", "Tips & Trik", "Berita"] }
+      - { label: "Kategori", name: "category", widget: "select", options: ["Info Atomy", "Produk", "Promo", "Tips & Trik", "Berita", "Pakai Atomy Yuk"] }
       - { label: "Gambar Cover", name: "thumbnail", widget: "image", required: false }
       - { label: "Ringkasan", name: "summary", widget: "text" }
       - { label: "Isi Artikel", name: "body", widget: "markdown" }
